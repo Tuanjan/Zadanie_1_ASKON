@@ -16,6 +16,10 @@ namespace Zadanie_1
         {
             InitializeComponent();
         }
+        
+        private string connFile;
+        private string connServer;
+        private string connDatabase;
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -24,8 +28,16 @@ namespace Zadanie_1
 
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Create_DB crtDB = new Create_DB();
-            crtDB.Show();
+            using (Create_DB createDB = new Create_DB())
+            {
+                DialogResult dr = createDB.ShowDialog();
+                if (dr == DialogResult.OK)
+                {
+                    connFile = createDB.file;
+                    connServer = createDB.server;
+                    connDatabase = createDB.database;
+                }
+            }
         }
 
         private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -35,8 +47,16 @@ namespace Zadanie_1
 
         private void connectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Connect_DB cntDB = new Connect_DB();
-            cntDB.Show();
+            using (Connect_DB connDB = new Connect_DB())
+            {
+                DialogResult dr = connDB.ShowDialog();
+                if (dr == DialogResult.OK)
+                {
+                    connFile = connDB.file;
+                    connServer = connDB.server;
+                    connDatabase = connDB.database;
+                }
+            }
         }
     }
 }

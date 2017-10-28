@@ -12,6 +12,10 @@ namespace Zadanie_1
 {
     public partial class Create_DB : Form
     {
+        public string file;
+        public string server;
+        public string database;
+
         public Create_DB()
         {
             InitializeComponent();
@@ -22,6 +26,11 @@ namespace Zadanie_1
             Inquiries a = new Inquiries(textBox1.Text, textBox2.Text);
             a.CreateDB(textBox3.Text);
             a.CreateTable(textBox3.Text);
+
+            file = textBox1.Text;
+            server = textBox1.Text;
+            database = textBox1.Text;
+
             this.Close();
         }
     }

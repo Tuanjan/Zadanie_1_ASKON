@@ -21,11 +21,18 @@ namespace Zadanie_1
             this.server = server;
             this.file = file;
         }
-
+        
+        public void DisconnectDB(string nameDB)
+        {
+            if (myConn.State == ConnectionState.Open)
+            {
+                myConn.Close();
+            }
+        }
         public void CreateDB(string nameDB)
         {
             String str = "Server=" + server + ";Integrated security=SSPI;database=master";
-            SqlConnection mymewConn = new SqlConnection(str);
+            SqlConnection mynewConn = new SqlConnection(str);
 
             str = "CREATE DATABASE " + nameDB + " ON PRIMARY " +
                 "(NAME = " + nameDB + "_Data, " +
@@ -36,16 +43,11 @@ namespace Zadanie_1
                 "SIZE = 5MB, " +
                 "MAXSIZE = 20MB, " +
                 "FILEGROWTH = 10%)";
-            SqlCommand myCommand = new SqlCommand(str, mymewConn);
+            SqlCommand myCommand = new SqlCommand(str, mynewConn);
 
-            mymewConn.Open();
+            mynewConn.Open();
             myCommand.ExecuteNonQuery();
-
-            if (mymewConn.State == ConnectionState.Open)
-            {
-                mymewConn.Close();
-            }
-            
+            mynewConn.Close();
         }
         public void CreateTable(string nameDB)
         {
@@ -71,7 +73,7 @@ namespace Zadanie_1
 
             myConn.Open();
             myCommand.ExecuteNonQuery();
-
+            myConn.Close();
         }
 
         public void ConnectDB(string nameDB)
@@ -80,15 +82,7 @@ namespace Zadanie_1
             myConn = new SqlConnection(str);
         }
 
-        public void DisconnectDB(string nameDB)
-        {
-            if (myConn.State == ConnectionState.Open)
-            {
-                myConn.Close();
-            }
-        }
-
-        public void AddDB(string nameDB)
+        public void AddDB()
         {
 
         }

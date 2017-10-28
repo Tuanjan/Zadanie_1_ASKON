@@ -13,6 +13,10 @@ namespace Zadanie_1
 {
     public partial class Connect_DB : Form
     {
+        public string file;
+        public string server;
+        public string database;
+
         public Connect_DB()
         {
             InitializeComponent();
@@ -36,10 +40,16 @@ namespace Zadanie_1
 
         private void btnConnectDB(object sender, EventArgs e)
         {
+            file = textBox1.Text;
+            server = textBox1.Text;
+            database = textBox1.Text;
+
             StreamWriter write = new StreamWriter("autofill.txt");
             string str = textBox1.Text + "\n" + textBox2.Text + "\n" + textBox3.Text;
             write.Write(str);
             write.Close();
+
+            this.Close();
         }
     }
 }
