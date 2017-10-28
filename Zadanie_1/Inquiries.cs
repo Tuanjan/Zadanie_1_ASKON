@@ -15,76 +15,124 @@ namespace Zadanie_1
         private SqlConnection myConn;
         private string server;
         private string file;
-        
+
+        public Inquiries() { }
         public Inquiries(string file,string server)
         {
             this.server = server;
             this.file = file;
         }
         
-        public void DisconnectDB(string nameDB)
+        public bool Check_connectionDB()
         {
-            if (myConn.State == ConnectionState.Open)
+            try
+            {
+                if (myConn.State == ConnectionState.Open)
+                {
+                    return true;
+                }
+                else return false;
+            }
+            catch
+            {
+                MessageBox.Show("Упс! Ошибка в Check_connectionDB");
+                return true;
+            }
+        }
+        public void DisconnectDB()
+        {
+            try
             {
                 myConn.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Упс! Ошибка в DisconnectDB");
             }
         }
         public void CreateDB(string nameDB)
         {
-            String str = "Server=" + server + ";Integrated security=SSPI;database=master";
-            SqlConnection mynewConn = new SqlConnection(str);
+            try
+            {
+                String str;
+                SqlConnection mynewConn = new SqlConnection("Server=" + server + ";Integrated security=SSPI;database=master");
 
-            str = "CREATE DATABASE " + nameDB + " ON PRIMARY " +
-                "(NAME = " + nameDB + "_Data, " +
-                "FILENAME = '"+ file + nameDB + ".mfd', " +
-                "SIZE = 5MB, MAXSIZE = 20MB, FILEGROWTH = 10%) " +
-                "LOG ON (NAME = " + nameDB + "_Log, " +
-                "FILENAME = '" + file + nameDB + ".ldf', " +
-                "SIZE = 5MB, " +
-                "MAXSIZE = 20MB, " +
-                "FILEGROWTH = 10%)";
-            SqlCommand myCommand = new SqlCommand(str, mynewConn);
+                str = "CREATE DATABASE " + nameDB + " ON PRIMARY " +
+                    "(NAME = " + nameDB + "_Data, " +
+                    "FILENAME = '" + file + nameDB + ".mfd', " +
+                    "SIZE = 5MB, MAXSIZE = 20MB, FILEGROWTH = 10%) " +
+                    "LOG ON (NAME = " + nameDB + "_Log, " +
+                    "FILENAME = '" + file + nameDB + ".ldf', " +
+                    "SIZE = 5MB, " +
+                    "MAXSIZE = 20MB, " +
+                    "FILEGROWTH = 10%)";
+                SqlCommand myCommand = new SqlCommand(str, mynewConn);
 
-            mynewConn.Open();
-            myCommand.ExecuteNonQuery();
-            mynewConn.Close();
+                mynewConn.Open();
+                myCommand.ExecuteNonQuery();
+                mynewConn.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Упс! Ошибка в CreateDB");
+            }
         }
         public void CreateTable(string nameDB)
         {
-            String str = "Server=" + server + ";Integrated security=SSPI;database=" + nameDB;
-            myConn = new SqlConnection(str);
+            try
+            {
+                String str;
+                myConn = new SqlConnection("Server=" + server + ";Integrated security=SSPI;database=" + nameDB);
 
-            str = "CREATE TABLE objejct (" +
-                    "	id INT PRIMARY KEY IDENTITY(1,1)," +
-                    "	[type] TEXT," +
-                    "	product TEXT )" +
+                str = "CREATE TABLE objejct (" +
+                        "	id INT PRIMARY KEY IDENTITY(1,1)," +
+                        "	[type] TEXT," +
+                        "	product TEXT )" +
 
-                  "CREATE TABLE attribute (" +
-                    "	id INT NOT NULL FOREIGN KEY REFERENCES objejct(id)," +
-                    "	name TEXT," +
-                    "	value TEXT)" +
+                      "CREATE TABLE attribute (" +
+                        "	id INT NOT NULL FOREIGN KEY REFERENCES objejct(id)," +
+                        "	name TEXT," +
+                        "	value TEXT)" +
 
-                  "CREATE TABLE connection (" +
-                    "	idparent INT NOT NULL FOREIGN KEY REFERENCES objejct(id)," +
-                    "	idchild INT NOT NULL FOREIGN KEY REFERENCES objejct(id)," +
-                    "	linkname TEXT)";
+                      "CREATE TABLE connection (" +
+                        "	idparent INT NOT NULL FOREIGN KEY REFERENCES objejct(id)," +
+                        "	idchild INT NOT NULL FOREIGN KEY REFERENCES objejct(id)," +
+                        "	linkname TEXT)";
 
-            SqlCommand myCommand = new SqlCommand(str, myConn);
+                SqlCommand myCommand = new SqlCommand(str, myConn);
 
-            myConn.Open();
-            myCommand.ExecuteNonQuery();
-            myConn.Close();
-        }
-
+                myConn.Open();
+                myCommand.ExecuteNonQuery();
+                myConn.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Упс! Ошибка в CreateTable");
+            }
+}
         public void ConnectDB(string nameDB)
         {
-            String str = "Server=" + server + ";Integrated security=SSPI;database=" + nameDB;
-            myConn = new SqlConnection(str);
+            try
+            {
+                myConn = new SqlConnection("Server=" + server + ";Integrated security=SSPI;database=" + nameDB);
+            }
+            catch
+            {
+                MessageBox.Show("Упс! Ошибка в CreateTable");
+            }
         }
+
 
         public void AddDB()
         {
+            if (myConn.State != ConnectionState.Open)
+            {
+                MessageBox.Show("Нет подключение к базе данных");
+            }
+            else
+            {
 
+            }
         }
 
             //  Проверка подключение к базы //

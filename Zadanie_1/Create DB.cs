@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Zadanie_1
 {
@@ -29,9 +30,29 @@ namespace Zadanie_1
 
             file = textBox1.Text;
             server = textBox1.Text;
-            database = textBox1.Text;
+            database = textBox3.Text;
+
+            StreamWriter write = new StreamWriter("autofillcreate.txt");
+            string str = textBox1.Text + "\n" + textBox2.Text;
+            write.Write(str);
+            write.Close();
 
             this.Close();
+        }
+
+        private void Create_DB_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                StreamReader read = new StreamReader("autofillcreate.txt");
+                textBox1.Text = read.ReadLine();
+                textBox2.Text = read.ReadLine();
+                read.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Упс! Ошибка в Create_DB_Load");
+            }
         }
     }
 }

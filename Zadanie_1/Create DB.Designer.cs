@@ -80,7 +80,6 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(226, 20);
             this.textBox1.TabIndex = 4;
-            this.textBox1.Text = "C:\\\\Program Files\\\\Microsoft SQL Server\\\\MSSQL12.SQLEXPRESS\\\\MSSQL\\\\DATA\\\\";
             // 
             // textBox2
             // 
@@ -88,7 +87,6 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(226, 20);
             this.textBox2.TabIndex = 5;
-            this.textBox2.Text = "DESKTOP-906H1M0\\SQLEXPRESS";
             // 
             // textBox3
             // 
@@ -111,6 +109,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Create_DB";
             this.Text = "Создание БД";
+            this.Load += new System.EventHandler(this.Create_DB_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

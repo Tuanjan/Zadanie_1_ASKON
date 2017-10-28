@@ -13,7 +13,6 @@ namespace Zadanie_1
 {
     public partial class Connect_DB : Form
     {
-        public string file;
         public string server;
         public string database;
 
@@ -26,26 +25,24 @@ namespace Zadanie_1
         {
             try
             {
-                StreamReader read = new StreamReader("autofill.txt");
-                textBox1.Text = read.ReadLine();
+                StreamReader read = new StreamReader("autofillconnect.txt");
                 textBox2.Text = read.ReadLine();
                 textBox3.Text = read.ReadLine();
                 read.Close();
             }
             catch
             {
-                
+                MessageBox.Show("Упс! Ошибка в Connect_DB_Load");
             }
         }
 
         private void btnConnectDB(object sender, EventArgs e)
         {
-            file = textBox1.Text;
-            server = textBox1.Text;
-            database = textBox1.Text;
+            server = textBox2.Text;
+            database = textBox3.Text;
 
-            StreamWriter write = new StreamWriter("autofill.txt");
-            string str = textBox1.Text + "\n" + textBox2.Text + "\n" + textBox3.Text;
+            StreamWriter write = new StreamWriter("autofillconnect.txt");
+            string str =textBox2.Text + "\n" + textBox3.Text;
             write.Write(str);
             write.Close();
 

@@ -16,13 +16,14 @@ namespace Zadanie_1
         {
             InitializeComponent();
         }
-        
         private string connFile;
         private string connServer;
         private string connDatabase;
+        private Inquiries inq;
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            inq.DisconnectDB();
             this.Close();
         }
 
@@ -38,24 +39,50 @@ namespace Zadanie_1
                     connDatabase = createDB.database;
                 }
             }
+
+            inq = new Inquiries(connFile, connServer);
+            inq.ConnectDB(connDatabase);
+
+            if(inq.Check_connectionDB() == false)
+            {
+                createToolStripMenuItem.Enabled = false;
+                disconnectToolStripMenuItem.Enabled = true;
+                connectionToolStripMenuItem.Enabled = false;
+            }
         }
 
         private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            inq.DisconnectDB();
+            if (inq.Check_connectionDB() == false)
+            {
+                connectionToolStripMenuItem.Enabled = true;
+                createToolStripMenuItem.Enabled = true;
+                disconnectToolStripMenuItem.Enabled = false;
+            }
         }
 
         private void connectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            
             using (Connect_DB connDB = new Connect_DB())
             {
                 DialogResult dr = connDB.ShowDialog();
                 if (dr == DialogResult.OK)
                 {
-                    connFile = connDB.file;
                     connServer = connDB.server;
                     connDatabase = connDB.database;
                 }
+            }
+
+            inq = new Inquiries(connFile, connServer);
+            inq.ConnectDB(connDatabase);
+
+            if (inq.Check_connectionDB() == false)
+            {
+                createToolStripMenuItem.Enabled = false;
+                disconnectToolStripMenuItem.Enabled = true;
+                connectionToolStripMenuItem.Enabled = false;
             }
         }
     }
