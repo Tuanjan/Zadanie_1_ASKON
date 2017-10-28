@@ -13,45 +13,43 @@ namespace Zadanie_1
     class Inquiries
     {
         private SqlConnection myConn;
+        private string server;
+        private string file;
+        
+        public Inquiries(string file,string server)
+        {
+            this.server = server;
+            this.file = file;
+        }
+
         public void CreateDB(string nameDB)
         {
-            String str;
-            SqlConnection mymewConn = new SqlConnection("Server=DESKTOP-906H1M0\\SQLEXPRESS;Integrated security=SSPI;database=master");
+            String str = "Server=" + server + ";Integrated security=SSPI;database=master";
+            SqlConnection mymewConn = new SqlConnection(str);
 
             str = "CREATE DATABASE " + nameDB + " ON PRIMARY " +
-                "(NAME = MyDatabase_Data, " +
-                "FILENAME = 'C:\\Program Files\\Microsoft SQL Server\\MSSQL12.SQLEXPRESS\\MSSQL\\DATA\\" + nameDB + ".mfd', " +
+                "(NAME = " + nameDB + "_Data, " +
+                "FILENAME = '"+ file + nameDB + ".mfd', " +
                 "SIZE = 5MB, MAXSIZE = 20MB, FILEGROWTH = 10%) " +
-                "LOG ON (NAME = MyDatabase_Log, " +
-                "FILENAME = 'C:\\Program Files\\Microsoft SQL Server\\MSSQL12.SQLEXPRESS\\MSSQL\\DATA\\" + nameDB + ".ldf', " +
+                "LOG ON (NAME = " + nameDB + "_Log, " +
+                "FILENAME = '" + file + nameDB + ".ldf', " +
                 "SIZE = 5MB, " +
                 "MAXSIZE = 20MB, " +
                 "FILEGROWTH = 10%)";
-
             SqlCommand myCommand = new SqlCommand(str, mymewConn);
 
-            try
-            {
-                mymewConn.Open();
-                myCommand.ExecuteNonQuery();
-                MessageBox.Show("DataBase is Created Successfully", "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            finally
-            {
-                if (mymewConn.State == ConnectionState.Open)
-                {
-                    mymewConn.Close();
-                }
-            }
+            mymewConn.Open();
+            myCommand.ExecuteNonQuery();
 
+            if (mymewConn.State == ConnectionState.Open)
+            {
+                mymewConn.Close();
+            }
+            
         }
         public void CreateTable(string nameDB)
         {
-            String str = "Server=DESKTOP-906H1M0\\SQLEXPRESS;Integrated security=SSPI;database=" + nameDB;
+            String str = "Server=" + server + ";Integrated security=SSPI;database=" + nameDB;
             myConn = new SqlConnection(str);
 
             str = "CREATE TABLE objejct (" +
@@ -71,30 +69,23 @@ namespace Zadanie_1
 
             SqlCommand myCommand = new SqlCommand(str, myConn);
 
-            try
-            {
-                myConn.Open();
-                myCommand.ExecuteNonQuery();
-                MessageBox.Show("DataBase is Created Successfully", "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            finally
-            {
-                if (myConn.State == ConnectionState.Open)
-                {
-                    myConn.Close();
-                }
-            }
+            myConn.Open();
+            myCommand.ExecuteNonQuery();
 
         }
 
         public void ConnectDB(string nameDB)
         {
-            String str = "Server=DESKTOP-906H1M0\\SQLEXPRESS;Integrated security=SSPI;database=" + nameDB;
+            String str = "Server=" + server + ";Integrated security=SSPI;database=" + nameDB;
             myConn = new SqlConnection(str);
+        }
+
+        public void DisconnectDB(string nameDB)
+        {
+            if (myConn.State == ConnectionState.Open)
+            {
+                myConn.Close();
+            }
         }
 
         public void AddDB(string nameDB)
