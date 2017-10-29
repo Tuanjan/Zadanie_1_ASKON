@@ -35,7 +35,7 @@ namespace Zadanie_1
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Error in Connect_DB_Load:" + ex.Message);
             }
         }
 
@@ -55,7 +55,7 @@ namespace Zadanie_1
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Error in btnConnectDB:" + ex.Message);
             }
         }
     }

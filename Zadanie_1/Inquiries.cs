@@ -47,7 +47,7 @@ namespace Zadanie_1
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Error in DisconnectDB: " + ex.Message);
             }
         }
         public void CreateDB(string nameDB)
@@ -74,7 +74,7 @@ namespace Zadanie_1
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Error in CreateDB: " + ex.Message);
             }
         }
         public void CreateTable(string nameDB)
@@ -88,11 +88,13 @@ namespace Zadanie_1
                         "	product TEXT )" +
 
                       "CREATE TABLE attribute (" +
+                        "   id_attribute INT PRIMARY KEY IDENTITY(1,1)," +
                         "	id INT NOT NULL FOREIGN KEY REFERENCES object(id)," +
                         "	name TEXT," +
                         "	value TEXT)" +
 
                       "CREATE TABLE connection (" +
+                        "   id_connection INT PRIMARY KEY IDENTITY(1,1)," +
                         "	idparent INT NOT NULL FOREIGN KEY REFERENCES object(id)," +
                         "	idchild INT NOT NULL FOREIGN KEY REFERENCES object(id)," +
                         "	linkname TEXT)";
@@ -105,7 +107,7 @@ namespace Zadanie_1
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Error in CreateTable: " + ex.Message);
             }
         }
         public void ConnectDB(string nameDB)
@@ -117,7 +119,7 @@ namespace Zadanie_1
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Error in ConnectDB: " + ex.Message);
             }
         }
         public void AddObjectDB(string value_1,string value_2)
@@ -130,7 +132,33 @@ namespace Zadanie_1
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Error in AddObjectDB: " + ex.Message);
+            }
+        }
+        public void AddAttributeDB(string value_1, string value_2, string value_3)
+        {
+            try
+            {
+                String str = "INSERT INTO attribute (id,name,value) values ('" + value_1 + "','" + value_2 + "','" + value_3 + "')";
+                SqlCommand myCommand = new SqlCommand(str, myConn);
+                myCommand.ExecuteNonQuery();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Error in AddAttributeDB: " + ex.Message);
+            }
+        }
+        public void AddConnectionDB(string value_1, string value_2, string value_3)
+        {
+            try
+            {
+                String str = "INSERT INTO connection (idparent,idchild,linkname) values ('" + value_1 + "','" + value_2 + "','" + value_3 + "')";
+                SqlCommand myCommand = new SqlCommand(str, myConn);
+                myCommand.ExecuteNonQuery();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Error in AddConnectionDB: " + ex.Message);
             }
         }
 

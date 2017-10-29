@@ -28,9 +28,9 @@ namespace Zadanie_1
                 inq.DisconnectDB();
                 this.Close();
             }
-            catch
+            catch (System.Exception ex)
             {
-                MessageBox.Show("Не удалось закрыть програму!");
+                MessageBox.Show("Error in closeToolStripMenuItem: " + ex.Message);
             }
         }
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
@@ -61,7 +61,7 @@ namespace Zadanie_1
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Error in createToolStripMenuItem: " + ex.Message);
             }
         }
         private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -74,11 +74,14 @@ namespace Zadanie_1
                     createToolStripMenuItem.Enabled = true;
                     disconnectToolStripMenuItem.Enabled = false;
                     connectionToolStripMenuItem.Enabled = true;
+                    addObject.Visible = false;
+                    addAttribute.Visible = false;
+                    addConnection.Visible = false;
                 }
             }
-            catch
+            catch (System.Exception ex)
             {
-
+                MessageBox.Show("Error in disconnectToolStripMenuItem: " + ex.Message);
             }
         }
         private void connectionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -107,20 +110,62 @@ namespace Zadanie_1
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Error in connectionToolStripMenuItem: " + ex.Message);
             }
         }
-
         private void objectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                inq.AddObjectDB("tuan1","tuan2");
+                addObject.Visible = true;
+                addAttribute.Visible = false;
+                addConnection.Visible = false;
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Error in objectToolStripMenuItem: " + ex.Message);
             }
+        }
+        private void attributeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                addObject.Visible = false;
+                addAttribute.Visible = true;
+                addConnection.Visible = false;
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Error in attributeToolStripMenuItem: " + ex.Message);
+            }
+        }
+        private void connToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                addObject.Visible = false;
+                addAttribute.Visible = false;
+                addConnection.Visible = true;
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Error in connToolStripMenuItem: " + ex.Message);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            inq.AddObjectDB(typeBox.Text,productBox.Text);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            inq.AddAttributeDB(idBox.Text, nameBox.Text, valueBox.Text);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            inq.AddConnectionDB(idparentBox.Text, idchildBox.Text, linknameBox.Text);
         }
     }
 }

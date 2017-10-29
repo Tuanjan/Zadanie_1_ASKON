@@ -43,7 +43,7 @@ namespace Zadanie_1
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Error in btnCreateDB: " + ex.Message);
             }
         }
 
@@ -61,7 +61,7 @@ namespace Zadanie_1
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Error in Create_DB_Load: " + ex.Message);
             }
         }
     }
