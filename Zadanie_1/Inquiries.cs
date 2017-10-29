@@ -72,86 +72,78 @@ namespace Zadanie_1
                 myCommand.ExecuteNonQuery();
                 mynewConn.Close();
             }
-            catch
+            catch (System.Exception ex)
             {
-                MessageBox.Show("Упс! Ошибка в CreateDB");
+                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         public void CreateTable(string nameDB)
         {
             try
             {
-                String str;
-                myConn = new SqlConnection("Server=" + server + ";Integrated security=SSPI;database=" + nameDB);
-
-                str = "CREATE TABLE objejct (" +
+                SqlConnection mycreatetableConn = new SqlConnection("Server=" + server + ";Integrated security=SSPI;database=" + nameDB);
+                String str = "CREATE TABLE object (" +
                         "	id INT PRIMARY KEY IDENTITY(1,1)," +
                         "	[type] TEXT," +
                         "	product TEXT )" +
 
                       "CREATE TABLE attribute (" +
-                        "	id INT NOT NULL FOREIGN KEY REFERENCES objejct(id)," +
+                        "	id INT NOT NULL FOREIGN KEY REFERENCES object(id)," +
                         "	name TEXT," +
                         "	value TEXT)" +
 
                       "CREATE TABLE connection (" +
-                        "	idparent INT NOT NULL FOREIGN KEY REFERENCES objejct(id)," +
-                        "	idchild INT NOT NULL FOREIGN KEY REFERENCES objejct(id)," +
+                        "	idparent INT NOT NULL FOREIGN KEY REFERENCES object(id)," +
+                        "	idchild INT NOT NULL FOREIGN KEY REFERENCES object(id)," +
                         "	linkname TEXT)";
 
-                SqlCommand myCommand = new SqlCommand(str, myConn);
+                SqlCommand myCommand = new SqlCommand(str, mycreatetableConn);
 
-                myConn.Open();
+                mycreatetableConn.Open();
                 myCommand.ExecuteNonQuery();
-                myConn.Close();
+                mycreatetableConn.Close();
             }
-            catch
+            catch (System.Exception ex)
             {
-                MessageBox.Show("Упс! Ошибка в CreateTable");
+                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-}
+        }
         public void ConnectDB(string nameDB)
         {
             try
             {
                 myConn = new SqlConnection("Server=" + server + ";Integrated security=SSPI;database=" + nameDB);
+                myConn.Open();
             }
-            catch
+            catch (System.Exception ex)
             {
-                MessageBox.Show("Упс! Ошибка в CreateTable");
+                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-
-
-        public void AddDB()
+        public void AddObjectDB(string value_1,string value_2)
         {
-            if (myConn.State != ConnectionState.Open)
-            {
-                MessageBox.Show("Нет подключение к базе данных");
-            }
-            else
-            {
-
-            }
+            String str = "INSERT INTO object ([type],product) values ('" + value_1 + "','" + value_2+ "')" ;
+            SqlCommand myCommand = new SqlCommand(str, myConn);
+            myCommand.ExecuteNonQuery();
         }
 
-            //  Проверка подключение к базы //
-            /*try
+        //  Проверка подключение к базы //
+        /*try
+            {
+                myConn.Open();
+                myCommand.ExecuteNonQuery();
+                MessageBox.Show("DataBase is Created Successfully", "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            finally
+            {
+                if (myConn.State == ConnectionState.Open)
                 {
-                    myConn.Open();
-                    myCommand.ExecuteNonQuery();
-                    MessageBox.Show("DataBase is Created Successfully", "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    myConn.Close();
                 }
-                catch (System.Exception ex)
-                {
-                    MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                finally
-                {
-                    if (myConn.State == ConnectionState.Open)
-                    {
-                        myConn.Close();
-                    }
-             }*/
-        }
+         }*/
+    }
 }

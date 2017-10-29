@@ -29,7 +29,7 @@ namespace Zadanie_1
             a.CreateTable(textBox3.Text);
 
             file = textBox1.Text;
-            server = textBox1.Text;
+            server = textBox2.Text;
             database = textBox3.Text;
 
             StreamWriter write = new StreamWriter("autofillcreate.txt");

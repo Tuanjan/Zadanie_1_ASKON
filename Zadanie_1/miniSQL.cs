@@ -23,66 +23,103 @@ namespace Zadanie_1
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            inq.DisconnectDB();
-            this.Close();
+            try
+            {
+                inq.DisconnectDB();
+                this.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось закрыть програму!");
+            }
         }
-
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (Create_DB createDB = new Create_DB())
+            try
             {
-                DialogResult dr = createDB.ShowDialog();
-                if (dr == DialogResult.OK)
+
+                using (Create_DB createDB = new Create_DB())
                 {
-                    connFile = createDB.file;
-                    connServer = createDB.server;
-                    connDatabase = createDB.database;
+                    DialogResult dr = createDB.ShowDialog();
+                    if (dr == DialogResult.OK)
+                    {
+                        connFile = createDB.file;
+                        connServer = createDB.server;
+                        connDatabase = createDB.database;
+                    }
+                }
+
+                inq = new Inquiries(connFile, connServer);
+                inq.ConnectDB(connDatabase);
+
+                if (inq.Check_connectionDB() == true)
+                {
+                    createToolStripMenuItem.Enabled = false;
+                    disconnectToolStripMenuItem.Enabled = true;
+                    connectionToolStripMenuItem.Enabled = false;
                 }
             }
-
-            inq = new Inquiries(connFile, connServer);
-            inq.ConnectDB(connDatabase);
-
-            if(inq.Check_connectionDB() == false)
+            catch
             {
-                createToolStripMenuItem.Enabled = false;
-                disconnectToolStripMenuItem.Enabled = true;
-                connectionToolStripMenuItem.Enabled = false;
+
             }
         }
-
         private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            inq.DisconnectDB();
-            if (inq.Check_connectionDB() == false)
+            try
             {
-                connectionToolStripMenuItem.Enabled = true;
-                createToolStripMenuItem.Enabled = true;
-                disconnectToolStripMenuItem.Enabled = false;
+                inq.DisconnectDB();
+                if (inq.Check_connectionDB() == false)
+                {
+                    createToolStripMenuItem.Enabled = true;
+                    disconnectToolStripMenuItem.Enabled = false;
+                    connectionToolStripMenuItem.Enabled = true;
+                }
+            }
+            catch
+            {
+
+            }
+        }
+        private void connectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (Connect_DB connDB = new Connect_DB())
+                {
+                    DialogResult dr = connDB.ShowDialog();
+                    if (dr == DialogResult.OK)
+                    {
+                        connServer = connDB.server;
+                        connDatabase = connDB.database;
+                    }
+                }
+
+                inq = new Inquiries(connFile, connServer);
+                inq.ConnectDB(connDatabase);
+
+                if (inq.Check_connectionDB() == true)
+                {
+                    createToolStripMenuItem.Enabled = false;
+                    disconnectToolStripMenuItem.Enabled = true;
+                    connectionToolStripMenuItem.Enabled = false;
+                }
+            }
+            catch
+            {
+
             }
         }
 
-        private void connectionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void objectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
-            using (Connect_DB connDB = new Connect_DB())
+            try
             {
-                DialogResult dr = connDB.ShowDialog();
-                if (dr == DialogResult.OK)
-                {
-                    connServer = connDB.server;
-                    connDatabase = connDB.database;
-                }
+                inq.AddObjectDB("tuan1","tuan2");
             }
-
-            inq = new Inquiries(connFile, connServer);
-            inq.ConnectDB(connDatabase);
-
-            if (inq.Check_connectionDB() == false)
+            catch (System.Exception ex)
             {
-                createToolStripMenuItem.Enabled = false;
-                disconnectToolStripMenuItem.Enabled = true;
-                connectionToolStripMenuItem.Enabled = false;
+                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
