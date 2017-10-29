@@ -48,7 +48,7 @@ namespace Zadanie_1
                         connDatabase = createDB.database;
                     }
                 }
-
+                MessageBox.Show(connFile + " " + connServer + " " + connDatabase);
                 inq = new Inquiries(connFile, connServer);
                 inq.ConnectDB(connDatabase);
 
@@ -59,9 +59,9 @@ namespace Zadanie_1
                     connectionToolStripMenuItem.Enabled = false;
                 }
             }
-            catch
+            catch (System.Exception ex)
             {
-
+                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -105,9 +105,9 @@ namespace Zadanie_1
                     connectionToolStripMenuItem.Enabled = false;
                 }
             }
-            catch
+            catch (System.Exception ex)
             {
-
+                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

@@ -33,9 +33,9 @@ namespace Zadanie_1
                 }
                 else return false;
             }
-            catch
+            catch (System.Exception ex)
             {
-                MessageBox.Show("Упс! Ошибка в Check_connectionDB");
+                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return true;
             }
         }
@@ -45,9 +45,9 @@ namespace Zadanie_1
             {
                 myConn.Close();
             }
-            catch
+            catch (System.Exception ex)
             {
-                MessageBox.Show("Упс! Ошибка в DisconnectDB");
+                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         public void CreateDB(string nameDB)
@@ -122,9 +122,16 @@ namespace Zadanie_1
         }
         public void AddObjectDB(string value_1,string value_2)
         {
-            String str = "INSERT INTO object ([type],product) values ('" + value_1 + "','" + value_2+ "')" ;
-            SqlCommand myCommand = new SqlCommand(str, myConn);
-            myCommand.ExecuteNonQuery();
+            try
+            {
+                String str = "INSERT INTO object ([type],product) values ('" + value_1 + "','" + value_2 + "')";
+                SqlCommand myCommand = new SqlCommand(str, myConn);
+                myCommand.ExecuteNonQuery();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         //  Проверка подключение к базы //

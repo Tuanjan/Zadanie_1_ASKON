@@ -25,28 +25,38 @@ namespace Zadanie_1
         {
             try
             {
-                StreamReader read = new StreamReader("autofillconnect.txt");
-                textBox2.Text = read.ReadLine();
-                textBox3.Text = read.ReadLine();
-                read.Close();
+                if (System.IO.File.Exists("autofillconnect.txt"))
+                {
+                    StreamReader read = new StreamReader("autofillconnect.txt");
+                    textBox2.Text = read.ReadLine();
+                    textBox3.Text = read.ReadLine();
+                    read.Close();
+                }
             }
-            catch
+            catch (System.Exception ex)
             {
-                MessageBox.Show("Упс! Ошибка в Connect_DB_Load");
+                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void btnConnectDB(object sender, EventArgs e)
         {
-            server = textBox2.Text;
-            database = textBox3.Text;
+            try
+            {
+                server = textBox2.Text;
+                database = textBox3.Text;
 
-            StreamWriter write = new StreamWriter("autofillconnect.txt");
-            string str =textBox2.Text + "\n" + textBox3.Text;
-            write.Write(str);
-            write.Close();
+                StreamWriter write = new StreamWriter("autofillconnect.txt");
+                string str = textBox2.Text + "\n" + textBox3.Text;
+                write.Write(str);
+                write.Close();
 
-            this.Close();
+                this.Close();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }
