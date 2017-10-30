@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace Zadanie_1
 {
@@ -48,10 +49,10 @@ namespace Zadanie_1
                         connDatabase = createDB.database;
                     }
                 }
-                MessageBox.Show(connFile + " " + connServer + " " + connDatabase);
+                
                 inq = new Inquiries(connFile, connServer);
                 inq.ConnectDB(connDatabase);
-
+                MessageBox.Show("Подключено:\nСервер: " + connServer + "\nБаза: " + connDatabase);
                 if (inq.Check_connectionDB() == true)
                 {
                     createToolStripMenuItem.Enabled = false;
@@ -113,6 +114,11 @@ namespace Zadanie_1
                 MessageBox.Show("Error in connectionToolStripMenuItem: " + ex.Message);
             }
         }
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void objectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -126,6 +132,12 @@ namespace Zadanie_1
                 MessageBox.Show("Error in objectToolStripMenuItem: " + ex.Message);
             }
         }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            inq.AddObjectDB(typeBox.Text,productBox.Text);
+            MessageBox.Show("Добавлено!");
+        }
+
         private void attributeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -133,12 +145,35 @@ namespace Zadanie_1
                 addObject.Visible = false;
                 addAttribute.Visible = true;
                 addConnection.Visible = false;
+
+                comboBox1.DataSource = inq.ComboBoxItem("type", "object");
+                comboBox1.ValueMember = "type";
+                comboBox1.DisplayMember = "type";
             }
             catch (System.Exception ex)
             {
                 MessageBox.Show("Error in attributeToolStripMenuItem: " + ex.Message);
             }
         }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            inq.AddAttributeDB(comboBox1.Text, comboBox2.Text, nameBox.Text, valueBox.Text);
+            MessageBox.Show("Добавлено!");
+        }
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                comboBox2.DataSource = inq.ComboBoxItem("type", "product", "object", comboBox1.Text);
+                comboBox2.ValueMember = "product";
+                comboBox2.DisplayMember = "product";
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Error in comboBox1_SelectedIndexChanged: " + ex.Message);
+            }
+        }
+        
         private void connToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -146,26 +181,50 @@ namespace Zadanie_1
                 addObject.Visible = false;
                 addAttribute.Visible = false;
                 addConnection.Visible = true;
+
+                comboBox3.DataSource = inq.ComboBoxItem("type", "object");
+                comboBox3.ValueMember = "type";
+                comboBox3.DisplayMember = "type";
+
+                comboBox5.DataSource = inq.ComboBoxItem("type", "object");
+                comboBox5.ValueMember = "type";
+                comboBox5.DisplayMember = "type";
             }
             catch (System.Exception ex)
             {
                 MessageBox.Show("Error in connToolStripMenuItem: " + ex.Message);
             }
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            inq.AddObjectDB(typeBox.Text,productBox.Text);
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            inq.AddAttributeDB(idBox.Text, nameBox.Text, valueBox.Text);
-        }
-
         private void button3_Click(object sender, EventArgs e)
         {
-            inq.AddConnectionDB(idparentBox.Text, idchildBox.Text, linknameBox.Text);
+            inq.AddConnectionDB(comboBox3.Text, comboBox4.Text, comboBox5.Text, comboBox6.Text, linknameBox.Text);
+            MessageBox.Show("Добавлено!");
+        }
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                comboBox4.DataSource = inq.ComboBoxItem("type", "product", "object", comboBox3.Text);
+                comboBox4.ValueMember = "product";
+                comboBox4.DisplayMember = "product";
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Error in comboBox1_SelectedIndexChanged: " + ex.Message);
+            }
+        }
+        private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                comboBox6.DataSource = inq.ComboBoxItem("type", "product", "object", comboBox5.Text);
+                comboBox6.ValueMember = "product";
+                comboBox6.DisplayMember = "product";
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Error in comboBox1_SelectedIndexChanged: " + ex.Message);
+            }
         }
     }
 }

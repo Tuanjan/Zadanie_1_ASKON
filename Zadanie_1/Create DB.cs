@@ -28,7 +28,6 @@ namespace Zadanie_1
             {
                 Inquiries a = new Inquiries(textBox1.Text, textBox2.Text);
                 a.CreateDB(textBox3.Text);
-                a.CreateTable(textBox3.Text);
 
                 file = textBox1.Text;
                 server = textBox2.Text;
