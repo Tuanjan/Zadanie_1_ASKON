@@ -13,14 +13,34 @@ namespace Zadanie_1
 {
     public partial class miniSQL : Form
     {
-        public miniSQL()
-        {
-            InitializeComponent();
-        }
         private string connFile;
         private string connServer;
         private string connDatabase;
         private Inquiries inq;
+
+        public miniSQL()
+        {
+            InitializeComponent();
+        }
+        private void visibleGroupBox(string a)
+        {
+            addObject.Visible = false;
+            addAttribute.Visible = false;
+            addConnection.Visible = false;
+            deleteObject.Visible = false;
+            deleteAttribute.Visible = false;
+            deleteConn.Visible = false;
+
+            switch (a)
+            {
+                case "addObject": addObject.Visible = true; break;
+                case "addAttribute": addAttribute.Visible = true; break;
+                case "addConnection": addConnection.Visible = true; break;
+                case "deleteObject": deleteObject.Visible = true; break;
+                case "deleteAttribute": deleteAttribute.Visible = true; break;
+                case "deleteConn": deleteConn.Visible = true; break;
+            }
+        }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -114,18 +134,12 @@ namespace Zadanie_1
                 MessageBox.Show("Error in connectionToolStripMenuItem: " + ex.Message);
             }
         }
-        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void objectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                addObject.Visible = true;
-                addAttribute.Visible = false;
-                addConnection.Visible = false;
+                visibleGroupBox("addObject");
             }
             catch (System.Exception ex)
             {
@@ -135,16 +149,14 @@ namespace Zadanie_1
         private void button1_Click(object sender, EventArgs e)
         {
             inq.AddObjectDB(typeBox.Text,productBox.Text);
-            MessageBox.Show("Добавлено!");
+            MessageBox.Show("Добавлено запись!");
         }
 
         private void attributeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                addObject.Visible = false;
-                addAttribute.Visible = true;
-                addConnection.Visible = false;
+                visibleGroupBox("addAttribute");
 
                 comboBox1.DataSource = inq.ComboBoxItem("type", "object");
                 comboBox1.ValueMember = "type";
@@ -158,7 +170,7 @@ namespace Zadanie_1
         private void button2_Click(object sender, EventArgs e)
         {
             inq.AddAttributeDB(comboBox1.Text, comboBox2.Text, nameBox.Text, valueBox.Text);
-            MessageBox.Show("Добавлено!");
+            MessageBox.Show("Добавлено запись!");
         }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -178,9 +190,7 @@ namespace Zadanie_1
         {
             try
             {
-                addObject.Visible = false;
-                addAttribute.Visible = false;
-                addConnection.Visible = true;
+                visibleGroupBox("addConnection");
 
                 comboBox3.DataSource = inq.ComboBoxItem("type", "object");
                 comboBox3.ValueMember = "type";
@@ -198,7 +208,7 @@ namespace Zadanie_1
         private void button3_Click(object sender, EventArgs e)
         {
             inq.AddConnectionDB(comboBox3.Text, comboBox4.Text, comboBox5.Text, comboBox6.Text, linknameBox.Text);
-            MessageBox.Show("Добавлено!");
+            MessageBox.Show("Добавлено запись!");
         }
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -210,7 +220,7 @@ namespace Zadanie_1
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show("Error in comboBox1_SelectedIndexChanged: " + ex.Message);
+                MessageBox.Show("Error in comboBox3_SelectedIndexChanged: " + ex.Message);
             }
         }
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
@@ -223,8 +233,97 @@ namespace Zadanie_1
             }
             catch (System.Exception ex)
             {
+                MessageBox.Show("Error in comboBox5_SelectedIndexChanged: " + ex.Message);
+            }
+        }
+
+        private void deleteObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                visibleGroupBox("deleteObject");
+
+                comboBox7.DataSource = inq.ComboBoxItem("type", "object");
+                comboBox7.ValueMember = "type";
+                comboBox7.DisplayMember = "type";
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Error in objectToolStripMenuItem: " + ex.Message);
+            }
+        }
+        private void button4_Click(object sender, EventArgs e)
+        {
+            inq.DeleteObjectDB(comboBox7.Text,comboBox8.Text);
+            MessageBox.Show("Удалено запись!");
+        }
+        private void comboBox7_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                comboBox8.DataSource = inq.ComboBoxItem("type", "product", "object", comboBox7.Text);
+                comboBox8.ValueMember = "product";
+                comboBox8.DisplayMember = "product";
+            }
+            catch (System.Exception ex)
+            {
                 MessageBox.Show("Error in comboBox1_SelectedIndexChanged: " + ex.Message);
             }
+        }
+
+        private void deleteAttributeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                visibleGroupBox("deleteAttribute");
+
+                comboBox9.DataSource = inq.ComboBoxItem("name", "attribute");
+                comboBox9.ValueMember = "name";
+                comboBox9.DisplayMember = "name";
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Error in objectToolStripMenuItem: " + ex.Message);
+            }
+        }
+        private void button5_Click(object sender, EventArgs e)
+        {
+            inq.DeleteAttributeDB(comboBox9.Text, comboBox10.Text);
+            MessageBox.Show("Удалено запись!");
+        }
+        private void comboBox9_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                comboBox10.DataSource = inq.ComboBoxItem("name", "value", "attribute", comboBox9.Text);
+                comboBox10.ValueMember = "value";
+                comboBox10.DisplayMember = "value";
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Error in comboBox9_SelectedIndexChanged: " + ex.Message);
+            }
+        }
+
+        private void deleteConnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                visibleGroupBox("deleteConn");
+
+                comboBox11.DataSource = inq.ComboBoxItem("linkname", "connection");
+                comboBox11.ValueMember = "linkname";
+                comboBox11.DisplayMember = "linkname";
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Error in objectToolStripMenuItem: " + ex.Message);
+            }
+        }
+        private void button6_Click(object sender, EventArgs e)
+        {
+            inq.DeleteConnectionDB(comboBox11.Text);
+            MessageBox.Show("Удалено запись!");
         }
     }
 }

@@ -77,9 +77,13 @@ namespace Zadanie_1
                 myConn.Open();
 
                 GoComandInFile("CreateDatabase.txt");
-                GoComandInFile("CreateProceduteInsertIntoObject.txt");
-                GoComandInFile("CreateProceduteInsertIntoAttribute.txt");
-                GoComandInFile("CreateProceduteInsertIntoConnection.txt");
+                GoComandInFile("CreateProcedureInsertIntoObject.txt");
+                GoComandInFile("CreateProcedureInsertIntoAttribute.txt");
+                GoComandInFile("CreateProcedureInsertIntoConnection.txt");
+                GoComandInFile("CreateTrigger.txt");
+                GoComandInFile("CreateProcedureDeleteFromObject.txt");
+                GoComandInFile("CreateProcedureDeleteFromAttribute.txt");
+                GoComandInFile("CreateProcedureDeleteFromConnection.txt");
             }
             catch (System.Exception ex)
             {
@@ -176,30 +180,49 @@ namespace Zadanie_1
             try
             {
                 String str = "EXEC [InsertIntoConnection] '" + type1 + "','" + product1 + "','" + type2 + "','" + product2 + "','" + linkname + "'";
+                GoComandInString(str);
             }
             catch (System.Exception ex)
             {
                 MessageBox.Show("Error in AddConnectionDB: " + ex.Message);
             }
         }
-
-        //  Проверка подключение к базы //
-        /*try
+        
+        public void DeleteObjectDB(string value_1, string value_2)
+        {
+            try
             {
-                myConn.Open();
-                myCommand.ExecuteNonQuery();
-                MessageBox.Show("DataBase is Created Successfully", "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                String str = "EXEC [DeleteFromObject] '" + value_1 + "','" + value_2 + "'";
+                GoComandInString(str);
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "MyProgram", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Error in DeleteObjectDB: " + ex.Message);
             }
-            finally
+        }
+        public void DeleteAttributeDB(string value_1, string value_2)
+        {
+            try
             {
-                if (myConn.State == ConnectionState.Open)
-                {
-                    myConn.Close();
-                }
-         }*/
+                String str = "EXEC [DeleteFromAttribute] '" + value_1 + "','" + value_2 + "'";
+                GoComandInString(str);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Error in DeleteAttributeDB: " + ex.Message);
+            }
+        }
+        public void DeleteConnectionDB(string value_1)
+        {
+            try
+            {
+                String str = "EXEC [DeleteFromConnection] '" + value_1 + "'";
+                GoComandInString(str);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Error in DeleteConnectionDB: " + ex.Message);
+            }
+        }
     }
 }
