@@ -105,13 +105,13 @@ namespace Zadanie_1
             int iColumn = worksheet.UsedRange.Columns.Count - 1;
             int iColumn1 = iColumn;
             int iColumn2 = iColumn;
-
+/*
             foreach (DataColumn c in dt.Columns)
             {
                 iColumn++;
                 excel.Cells[1, iColumn] = c.ColumnName;
             }
-
+*/
             // Row Data
             int iRow = 0;
 

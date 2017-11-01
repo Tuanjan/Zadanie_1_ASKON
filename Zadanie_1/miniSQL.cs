@@ -61,32 +61,30 @@ namespace Zadanie_1
                         connFile = createDB.file;
                         connServer = createDB.server;
                         connDatabase = createDB.database;
+                        int a = 0;
+                        for (int i = 0; i < connFile.Length - 1; i++)
+                        {
+                            if (connFile[i] == connFile[i + 1])
+                            {
+                                a++;
+                            }
+                        }
+
+                        if (a == 0)
+                        {
+                            connFile = "@\"" + connFile + "\"";
+                        }
+                        a = 0;
+                        inq = new Inquiries(connFile, connServer);
+                        inq.ConnectDB(connDatabase);
+                        MessageBox.Show("Подключено:\nСервер: " + connServer + "\nБаза: " + connDatabase);
+                        if (inq.Check_connectionDB() == true)
+                        {
+                            createToolStripMenuItem.Enabled = false;
+                            disconnectToolStripMenuItem.Enabled = true;
+                            connectionToolStripMenuItem.Enabled = false;
+                        }
                     }
-                }
-
-                int a = 0;
-                for (int i = 0; i < connFile.Length - 1; i++)
-                {
-                    if (connFile[i] == connFile[i + 1])
-                    {
-                        a++;
-                    }
-                }
-                
-                if(a == 0)
-                {
-                    connFile = "@\"" + connFile +"\"";
-                }
-
-
-                inq = new Inquiries(connFile, connServer);
-                inq.ConnectDB(connDatabase);
-                MessageBox.Show("Подключено:\nСервер: " + connServer + "\nБаза: " + connDatabase);
-                if (inq.Check_connectionDB() == true)
-                {
-                    createToolStripMenuItem.Enabled = false;
-                    disconnectToolStripMenuItem.Enabled = true;
-                    connectionToolStripMenuItem.Enabled = false;
                 }
             }
             catch (System.Exception ex)
