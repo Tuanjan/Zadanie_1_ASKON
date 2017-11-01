@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Data;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.IO;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Zadanie_1
@@ -76,14 +72,14 @@ namespace Zadanie_1
                 myConn = new SqlConnection("Server=" + server + ";Integrated security=SSPI;database=" + nameDB);
                 myConn.Open();
 
-                GoComandInFile("CreateDatabase.txt");
-                GoComandInFile("CreateProcedureInsertIntoObject.txt");
-                GoComandInFile("CreateProcedureInsertIntoAttribute.txt");
-                GoComandInFile("CreateProcedureInsertIntoConnection.txt");
-                GoComandInFile("CreateTrigger.txt");
-                GoComandInFile("CreateProcedureDeleteFromObject.txt");
-                GoComandInFile("CreateProcedureDeleteFromAttribute.txt");
-                GoComandInFile("CreateProcedureDeleteFromConnection.txt");
+                GoCommandInFile("CreateDatabase.txt");
+                GoCommandInFile("CreateProcedureInsertIntoObject.txt");
+                GoCommandInFile("CreateProcedureInsertIntoAttribute.txt");
+                GoCommandInFile("CreateProcedureInsertIntoConnection.txt");
+                GoCommandInFile("CreateTrigger.txt");
+                GoCommandInFile("CreateProcedureDeleteFromObject.txt");
+                GoCommandInFile("CreateProcedureDeleteFromAttribute.txt");
+                GoCommandInFile("CreateProcedureDeleteFromConnection.txt");
             }
             catch (System.Exception ex)
             {
@@ -103,40 +99,79 @@ namespace Zadanie_1
             }
         }
 
-        private void GoComandInFile(string thePathToFile)
+        private void GoCommandInFile(string thePathToFile)
         {
             try
             {
                 StreamReader reader = new StreamReader(thePathToFile);
                 string str = reader.ReadToEnd();
                 reader.Close();
-                SqlCommand comand = new SqlCommand(str, myConn);
-                comand.ExecuteNonQuery();
+                SqlCommand command = new SqlCommand(str, myConn);
+                command.ExecuteNonQuery();
             }
             catch (System.Exception ex)
             {
                 MessageBox.Show("Error in GoCommandInFile: " + ex.Message);
             }
         }
-        private void GoComandInString(String str)
+        private void GoCommandInString(string str)
         {
             try
             {
-                SqlCommand comand = new SqlCommand(str, myConn);
-                comand.ExecuteNonQuery();
+                SqlCommand command = new SqlCommand(str, myConn);
+                command.ExecuteNonQuery();
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show("Error in GoComandInString: " + ex.Message);
+                MessageBox.Show("Error in GoCommandInString: " + ex.Message);
             }
         }
-
-        public DataTable ComboBoxItem(string column_name, string table_name)
+        public List<string> GoCommandInString(string strcommand,string column)
         {
-            SqlCommand sc = new SqlCommand("SELECT DISTINCT " + column_name + " FROM " + table_name, myConn);
+                SqlCommand sqlcmd = new SqlCommand(strcommand, myConn);
+                SqlDataReader sqldr = sqlcmd.ExecuteReader();
+                DataTable dt = new DataTable();
+                dt.Columns.Add(column, typeof(string));
+                dt.Load(sqldr);
+
+                List<string> str = new List<string>();
+                foreach (DataRow row in dt.Rows)
+                {
+                    foreach (DataColumn Col in dt.Columns)
+                    {
+                        str.Add(row[Col].ToString());
+                    }
+                }
+
+                return str;
+        }
+
+        public List<string> TableItem(string column, string table)
+        {
+            SqlCommand sqlcmd = new SqlCommand("SELECT " + column + " FROM " + table, myConn);
+            SqlDataReader sqldr = sqlcmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Columns.Add(column, typeof(string));
+            dt.Load(sqldr);
+
+            List<string> str = new List<string>();
+            foreach (DataRow row in dt.Rows)
+            {
+                foreach (DataColumn Col in dt.Columns)
+                {
+                    str.Add(row[Col].ToString());
+                }
+            }
+
+            return str;
+        }
+
+        public DataTable ComboBoxItem(string column, string table)
+        {
+            SqlCommand sc = new SqlCommand("SELECT DISTINCT " + column + " FROM " + table, myConn);
             SqlDataReader reader = sc.ExecuteReader();
             DataTable dt = new DataTable();
-            dt.Columns.Add(column_name, typeof(string));
+            dt.Columns.Add(column, typeof(string));
             dt.Load(reader);
             return dt;
         }
@@ -155,7 +190,7 @@ namespace Zadanie_1
             try
             {
                 String str = "EXEC [InsertIntoObject] '" + value_1 + "','" + value_2 + "'";
-                GoComandInString(str);
+                GoCommandInString(str);
             }
             catch (System.Exception ex)
             {
@@ -168,7 +203,7 @@ namespace Zadanie_1
             {
                 String str = "EXEC [InsertIntoAttribute] '" + comboBoxSelectedType + "','" + comboBoxSelectedProduct +
                                 "','" + value_1 + "','" + value_2+"'";
-                GoComandInString(str);
+                GoCommandInString(str);
             }
             catch (System.Exception ex)
             {
@@ -180,7 +215,7 @@ namespace Zadanie_1
             try
             {
                 String str = "EXEC [InsertIntoConnection] '" + type1 + "','" + product1 + "','" + type2 + "','" + product2 + "','" + linkname + "'";
-                GoComandInString(str);
+                GoCommandInString(str);
             }
             catch (System.Exception ex)
             {
@@ -193,7 +228,7 @@ namespace Zadanie_1
             try
             {
                 String str = "EXEC [DeleteFromObject] '" + value_1 + "','" + value_2 + "'";
-                GoComandInString(str);
+                GoCommandInString(str);
             }
             catch (System.Exception ex)
             {
@@ -205,7 +240,7 @@ namespace Zadanie_1
             try
             {
                 String str = "EXEC [DeleteFromAttribute] '" + value_1 + "','" + value_2 + "'";
-                GoComandInString(str);
+                GoCommandInString(str);
             }
             catch (System.Exception ex)
             {
@@ -217,7 +252,7 @@ namespace Zadanie_1
             try
             {
                 String str = "EXEC [DeleteFromConnection] '" + value_1 + "'";
-                GoComandInString(str);
+                GoCommandInString(str);
             }
             catch (System.Exception ex)
             {

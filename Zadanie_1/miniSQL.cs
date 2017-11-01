@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace Zadanie_1
 {
@@ -95,9 +88,6 @@ namespace Zadanie_1
                     createToolStripMenuItem.Enabled = true;
                     disconnectToolStripMenuItem.Enabled = false;
                     connectionToolStripMenuItem.Enabled = true;
-                    addObject.Visible = false;
-                    addAttribute.Visible = false;
-                    addConnection.Visible = false;
                 }
             }
             catch (System.Exception ex)
@@ -324,6 +314,63 @@ namespace Zadanie_1
         {
             inq.DeleteConnectionDB(comboBox11.Text);
             MessageBox.Show("Удалено запись!");
+        }
+
+        private void treeViewRefresh()
+        {
+            
+        }
+
+        private void biographiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var idparent = new List<string>();
+            var idchild = new List<string>();
+            var distinct_idparent = new List<string>();
+
+            idparent = inq.TableItem("idparent", "connection");
+            idchild = inq.TableItem("idchild", "connection");
+
+            distinct_idparent = inq.GoCommandInString("SELECT DISTINCT idparent " +
+                                                               " FROM connection " +
+                                                               " WHERE idparent NOT IN ( SELECT idchild FROM connection ) ", "idparent");
+
+            var idObject = new List<string>();
+            var product = new List<string>();
+
+            idObject = inq.GoCommandInString("SELECT id FROM object ", "id");
+            product = inq.GoCommandInString("SELECT product FROM object ", "product");
+
+            for (int i = 0; i < distinct_idparent.Count; i++)
+            {
+                foreach (string a in idObject)
+                { 
+                    if(distinct_idparent[i] == a)
+                    {
+                        treeView1.Nodes.Add(product[idObject.IndexOf(a)]);
+                    }
+                }
+            }
+
+            for (int i =0; i< distinct_idparent.Count;i++)
+            {
+                add_child(treeView1.Nodes[i], distinct_idparent[i], idparent, idchild, idObject, product);
+            }
+            treeView1.Show();
+        }
+
+        private void add_child(TreeNode treenode, string parent, List<string> idparent, List<string> idchild, List<string> idObject, List<string> product)
+        {
+            int j = 0;
+            for (int i = 0; i < idparent.Count; i++)
+            {
+                if (idparent[i] == parent)
+                {
+                    treenode.Nodes.Add(product[idObject.IndexOf(idchild[i])]);
+                    add_child(treenode.Nodes[j], idchild[i], idparent, idchild,idObject, product);
+                    j++;
+                }
+            }
+            j = 0;
         }
     }
 }

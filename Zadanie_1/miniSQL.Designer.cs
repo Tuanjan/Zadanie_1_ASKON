@@ -51,6 +51,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.productBox = new System.Windows.Forms.TextBox();
+            this.typeBox = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.addAttribute = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -61,8 +63,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.valueBox = new System.Windows.Forms.TextBox();
             this.nameBox = new System.Windows.Forms.TextBox();
-            this.typeBox = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.addConnection = new System.Windows.Forms.GroupBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -91,6 +91,8 @@
             this.label17 = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
             this.comboBox11 = new System.Windows.Forms.ComboBox();
+            this.treeViewBox = new System.Windows.Forms.GroupBox();
+            this.treeView1 = new System.Windows.Forms.TreeView();
             this.menuStrip1.SuspendLayout();
             this.addObject.SuspendLayout();
             this.addAttribute.SuspendLayout();
@@ -98,6 +100,7 @@
             this.deleteObject.SuspendLayout();
             this.deleteAttribute.SuspendLayout();
             this.deleteConn.SuspendLayout();
+            this.treeViewBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -250,6 +253,7 @@
             this.biographiToolStripMenuItem.Name = "biographiToolStripMenuItem";
             this.biographiToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.biographiToolStripMenuItem.Text = "О программе";
+            this.biographiToolStripMenuItem.Click += new System.EventHandler(this.biographiToolStripMenuItem_Click);
             // 
             // addObject
             // 
@@ -290,6 +294,23 @@
             this.productBox.Name = "productBox";
             this.productBox.Size = new System.Drawing.Size(121, 20);
             this.productBox.TabIndex = 2;
+            // 
+            // typeBox
+            // 
+            this.typeBox.Location = new System.Drawing.Point(62, 36);
+            this.typeBox.Name = "typeBox";
+            this.typeBox.Size = new System.Drawing.Size(121, 20);
+            this.typeBox.TabIndex = 1;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(79, 99);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(104, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Добавить";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // addAttribute
             // 
@@ -386,23 +407,6 @@
             this.nameBox.Name = "nameBox";
             this.nameBox.Size = new System.Drawing.Size(110, 20);
             this.nameBox.TabIndex = 1;
-            // 
-            // typeBox
-            // 
-            this.typeBox.Location = new System.Drawing.Point(62, 36);
-            this.typeBox.Name = "typeBox";
-            this.typeBox.Size = new System.Drawing.Size(121, 20);
-            this.typeBox.TabIndex = 1;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(79, 99);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(104, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Добавить";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // addConnection
             // 
@@ -681,11 +685,29 @@
             this.comboBox11.Size = new System.Drawing.Size(121, 21);
             this.comboBox11.TabIndex = 0;
             // 
+            // treeViewBox
+            // 
+            this.treeViewBox.Controls.Add(this.treeView1);
+            this.treeViewBox.Location = new System.Drawing.Point(12, 178);
+            this.treeViewBox.Name = "treeViewBox";
+            this.treeViewBox.Size = new System.Drawing.Size(386, 237);
+            this.treeViewBox.TabIndex = 16;
+            this.treeViewBox.TabStop = false;
+            this.treeViewBox.Text = "Дерево";
+            // 
+            // treeView1
+            // 
+            this.treeView1.Location = new System.Drawing.Point(7, 20);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(371, 211);
+            this.treeView1.TabIndex = 0;
+            // 
             // miniSQL
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(407, 383);
+            this.ClientSize = new System.Drawing.Size(407, 427);
+            this.Controls.Add(this.treeViewBox);
             this.Controls.Add(this.deleteConn);
             this.Controls.Add(this.deleteAttribute);
             this.Controls.Add(this.deleteObject);
@@ -710,6 +732,7 @@
             this.deleteAttribute.PerformLayout();
             this.deleteConn.ResumeLayout(false);
             this.deleteConn.PerformLayout();
+            this.treeViewBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -780,5 +803,7 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ComboBox comboBox11;
+        private System.Windows.Forms.GroupBox treeViewBox;
+        private System.Windows.Forms.TreeView treeView1;
     }
 }
