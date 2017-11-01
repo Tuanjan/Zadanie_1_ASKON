@@ -77,7 +77,12 @@ namespace Zadanie_1
                         a = 0;
                         inq = new Inquiries(connFile, connServer);
                         inq.ConnectDB(connDatabase);
-                        MessageBox.Show("Подключено:\nСервер: " + connServer + "\nБаза: " + connDatabase);
+
+                        if (inq.Check_connectionDB())
+                        {
+                            MessageBox.Show("Подключено!\nСервер : " + connServer + "\n База : " + connDatabase);
+                        }
+
                         if (inq.Check_connectionDB() == true)
                         {
                             createToolStripMenuItem.Enabled = false;
@@ -130,6 +135,10 @@ namespace Zadanie_1
                             connectionToolStripMenuItem.Enabled = false;
                         }
                     }
+                }
+                if (inq.Check_connectionDB())
+                {
+                    MessageBox.Show("Подключено!\nСервер : " + connServer + "\n База : " + connDatabase);
                 }
             }
             catch (System.Exception ex)
