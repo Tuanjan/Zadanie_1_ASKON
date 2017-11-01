@@ -56,7 +56,7 @@ namespace Zadanie_1
 
                 str = "CREATE DATABASE " + nameDB + " ON PRIMARY " +
                     "(NAME = " + nameDB + "_Data, " +
-                    "FILENAME = '" + file + nameDB + ".mfd', " +
+                    "FILENAME = '" + file + nameDB + ".mdf', " +
                     "SIZE = 5MB, MAXSIZE = 20MB, FILEGROWTH = 10%) " +
                     "LOG ON (NAME = " + nameDB + "_Log, " +
                     "FILENAME = '" + file + nameDB + ".ldf', " +

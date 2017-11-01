@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Xml.Linq;
+using System.Xml;
 
 namespace Zadanie_1
 {
@@ -315,17 +317,7 @@ namespace Zadanie_1
             inq.DeleteConnectionDB(comboBox11.Text);
             MessageBox.Show("Удалено запись!");
         }
-
-        private void treeViewRefresh()
-        {
-            
-        }
-
-        private void biographiToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-           
-        }
-
+        
         private void add_child(TreeNode treenode, string parent, List<string> idparent, List<string> idchild, List<string> idObject, List<string> product)
         {
             int j = 0;
@@ -340,7 +332,6 @@ namespace Zadanie_1
             }
             j = 0;
         }
-
         private void button7_Click(object sender, EventArgs e)
         {
             treeView1.BeginUpdate();
@@ -378,10 +369,31 @@ namespace Zadanie_1
             {
                 add_child(treeView1.Nodes[i], distinct_idparent[i], idparent, idchild, idObject, product);
             }
-           // treeView1.Show();
 
             treeView1.EndUpdate();
             treeView1.ExpandAll();
         }
+        
+        private void converttoxmlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            XmlHandler xml = new XmlHandler();
+            xml.TreeViewToXml(treeView1,"xml.xml");
+            xml.mamaain(@"xml.xml", @"xml.xlsx");
+        }
+        private static List<XElement> CreateXmlElement(TreeNodeCollection treeViewNodes)
+        {
+            var elements = new List<XElement>();
+            foreach (TreeNode treeViewNode in treeViewNodes)
+            {
+                var element = new XElement(treeViewNode.Name);
+                if (treeViewNode.GetNodeCount(true) == 1)
+                    element.Value = treeViewNode.Nodes[0].Name;
+                else
+                    element.Add(CreateXmlElement(treeViewNode.Nodes));
+                elements.Add(element);
+            }
+            return elements;
+        }
+
     }
 }

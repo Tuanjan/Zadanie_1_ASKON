@@ -45,8 +45,6 @@
             this.deleteAttributeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteConnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.converttoxmlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.biographiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addObject = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -108,8 +106,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
-            this.actToolStripMenuItem,
-            this.helpToolStripMenuItem});
+            this.actToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(407, 24);
@@ -240,21 +237,7 @@
             this.converttoxmlToolStripMenuItem.Name = "converttoxmlToolStripMenuItem";
             this.converttoxmlToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.converttoxmlToolStripMenuItem.Text = "Выгрузка в .xml";
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.biographiToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
-            this.helpToolStripMenuItem.Text = "Справка";
-            // 
-            // biographiToolStripMenuItem
-            // 
-            this.biographiToolStripMenuItem.Name = "biographiToolStripMenuItem";
-            this.biographiToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.biographiToolStripMenuItem.Text = "О программе";
-            this.biographiToolStripMenuItem.Click += new System.EventHandler(this.biographiToolStripMenuItem_Click);
+            this.converttoxmlToolStripMenuItem.Click += new System.EventHandler(this.converttoxmlToolStripMenuItem_Click);
             // 
             // addObject
             // 
@@ -757,13 +740,11 @@
         private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem connectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem disconnectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem actToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem converttoxmlToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem biographiToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сохранитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addObjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addAttributeToolStripMenuItem;
