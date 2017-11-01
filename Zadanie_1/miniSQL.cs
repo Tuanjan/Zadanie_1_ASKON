@@ -410,7 +410,9 @@ namespace Zadanie_1
         private void converttoxmlToolStripMenuItem_Click(object sender, EventArgs e)
         {
             XmlHandler xml = new XmlHandler();
+            MessageBox.Show("Выберите файл xml.xml");
             string file_xml = OpenFile();
+            MessageBox.Show("Выберите или создайте файл .xlsx");
             string file_xlsx = OpenFile();
 
             xml.TreeViewToXml(treeView1, file_xml);
