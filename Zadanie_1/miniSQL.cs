@@ -53,7 +53,6 @@ namespace Zadanie_1
         {
             try
             {
-
                 using (Create_DB createDB = new Create_DB())
                 {
                     DialogResult dr = createDB.ShowDialog();
@@ -64,7 +63,22 @@ namespace Zadanie_1
                         connDatabase = createDB.database;
                     }
                 }
+
+                int a = 0;
+                for (int i = 0; i < connFile.Length - 1; i++)
+                {
+                    if (connFile[i] == connFile[i + 1])
+                    {
+                        a++;
+                    }
+                }
                 
+                if(a == 0)
+                {
+                    connFile = "@\"" + connFile +"\"";
+                }
+
+
                 inq = new Inquiries(connFile, connServer);
                 inq.ConnectDB(connDatabase);
                 MessageBox.Show("Подключено:\nСервер: " + connServer + "\nБаза: " + connDatabase);
@@ -374,11 +388,27 @@ namespace Zadanie_1
             treeView1.ExpandAll();
         }
         
+
+        private string OpenFile()
+        {
+            string file_xml = "xml";
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Multiselect = false;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                file_xml = dlg.FileName;
+            }
+            return file_xml;
+        }
+
         private void converttoxmlToolStripMenuItem_Click(object sender, EventArgs e)
         {
             XmlHandler xml = new XmlHandler();
-            xml.TreeViewToXml(treeView1,"xml.xml");
-            xml.mamaain(@"xml.xml", @"xml.xlsx");
+            string file_xml = OpenFile();
+            string file_xlsx = OpenFile();
+
+            xml.TreeViewToXml(treeView1, file_xml);
+            xml.XMLtoXLSX(file_xml, file_xlsx);
         }
         private static List<XElement> CreateXmlElement(TreeNodeCollection treeViewNodes)
         {

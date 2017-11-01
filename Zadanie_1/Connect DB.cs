@@ -33,10 +33,8 @@ namespace Zadanie_1
                     read.Close();
                 }
             }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show("Error in Connect_DB_Load:" + ex.Message);
-            }
+            catch { }
+            
         }
 
         private void btnConnectDB(object sender, EventArgs e)

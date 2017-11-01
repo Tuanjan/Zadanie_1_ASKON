@@ -62,71 +62,8 @@ namespace Zadanie_1
                 elem.Add(treeNode);
             }
         }
-
-        public void Converts(string file, string path)
-        {
-            DataSet ds = new DataSet();
-
-            //Convert the XML into Dataset
-            ds.ReadXml(file);
-
-            System.Data.DataTable dt = new System.Data.DataTable();
-
-            //Retrieve the table fron Dataset
-            dt = ds.Tables[0];
-
-            // Create an Excel object
-            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
-
-            //Create workbook object
-            string str = path;
-            Microsoft.Office.Interop.Excel.Workbook workbook = excel.Workbooks.Open(Filename: str);
-            //excel.
-            //Create worksheet object
-
-            Microsoft.Office.Interop.Excel.Worksheet worksheet = (Microsoft.Office.Interop.Excel.Worksheet)workbook.ActiveSheet;
-            //worksheet= workbook.Worksheets.get_Item(3);
-
-            // Column Headings
-            int iColumn = 0;
-
-            foreach (DataColumn c in dt.Columns)
-            {
-                iColumn++;
-                excel.Cells[1, iColumn] = c.ColumnName;
-            }
-
-            // Row Data
-            int iRow = worksheet.UsedRange.Rows.Count - 1;
-
-            foreach (DataRow dr in dt.Rows)
-            {
-                iRow++;
-
-                // Row's Cell Data
-                iColumn = 0;
-                foreach (DataColumn c in dt.Columns)
-                {
-                    iColumn++;
-                    excel.Cells[iRow + 1, iColumn] = dr[c.ColumnName];
-                }
-            }
-
-            ((Microsoft.Office.Interop.Excel._Worksheet)worksheet).Activate();
-
-            //Save the workbook
-            workbook.Save();
-
-            //Close the Workbook
-            workbook.Close();
-            Console.Out.WriteLine("close");
-            // Finally Quit the Application
-            ((Microsoft.Office.Interop.Excel._Application)excel).Quit();
-        }
-
-
-
-        public void mamaain(string file, string path)
+        
+        public void XMLtoXLSX(string file, string path)
         {
             DataSet ds = new DataSet();
 
@@ -159,7 +96,7 @@ namespace Zadanie_1
 
         }
 
-        static void FromDataTableToExcel(System.Data.DataTable dt, Microsoft.Office.Interop.Excel.Application excel, Microsoft.Office.Interop.Excel.Workbook workbook)
+        private void FromDataTableToExcel(System.Data.DataTable dt, Microsoft.Office.Interop.Excel.Application excel, Microsoft.Office.Interop.Excel.Workbook workbook)
         {
             //Create worksheet object
             Microsoft.Office.Interop.Excel.Worksheet worksheet = workbook.ActiveSheet;

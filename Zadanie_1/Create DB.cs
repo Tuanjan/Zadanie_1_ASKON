@@ -48,19 +48,12 @@ namespace Zadanie_1
 
         private void Create_DB_Load(object sender, EventArgs e)
         {
-            try
+            if (System.IO.File.Exists("autofillcreate.txt"))
             {
-                if (System.IO.File.Exists("autofillcreate.txt"))
-                {
-                    StreamReader read = new StreamReader("autofillcreate.txt");
-                    textBox1.Text = read.ReadLine();
-                    textBox2.Text = read.ReadLine();
-                    read.Close();
-                }
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show("Error in Create_DB_Load: " + ex.Message);
+                StreamReader read = new StreamReader("autofillcreate.txt");
+                textBox1.Text = read.ReadLine();
+                textBox2.Text = read.ReadLine();
+                read.Close();
             }
         }
     }
