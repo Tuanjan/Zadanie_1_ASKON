@@ -323,6 +323,29 @@ namespace Zadanie_1
 
         private void biographiToolStripMenuItem_Click(object sender, EventArgs e)
         {
+           
+        }
+
+        private void add_child(TreeNode treenode, string parent, List<string> idparent, List<string> idchild, List<string> idObject, List<string> product)
+        {
+            int j = 0;
+            for (int i = 0; i < idparent.Count; i++)
+            {
+                if (idparent[i] == parent)
+                {
+                    treenode.Nodes.Add(product[idObject.IndexOf(idchild[i])]);
+                    add_child(treenode.Nodes[j], idchild[i], idparent, idchild,idObject, product);
+                    j++;
+                }
+            }
+            j = 0;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            treeView1.BeginUpdate();
+            treeView1.Nodes.Clear();
+
             var idparent = new List<string>();
             var idchild = new List<string>();
             var distinct_idparent = new List<string>();
@@ -343,34 +366,22 @@ namespace Zadanie_1
             for (int i = 0; i < distinct_idparent.Count; i++)
             {
                 foreach (string a in idObject)
-                { 
-                    if(distinct_idparent[i] == a)
+                {
+                    if (distinct_idparent[i] == a)
                     {
                         treeView1.Nodes.Add(product[idObject.IndexOf(a)]);
                     }
                 }
             }
 
-            for (int i =0; i< distinct_idparent.Count;i++)
+            for (int i = 0; i < distinct_idparent.Count; i++)
             {
                 add_child(treeView1.Nodes[i], distinct_idparent[i], idparent, idchild, idObject, product);
             }
-            treeView1.Show();
-        }
+           // treeView1.Show();
 
-        private void add_child(TreeNode treenode, string parent, List<string> idparent, List<string> idchild, List<string> idObject, List<string> product)
-        {
-            int j = 0;
-            for (int i = 0; i < idparent.Count; i++)
-            {
-                if (idparent[i] == parent)
-                {
-                    treenode.Nodes.Add(product[idObject.IndexOf(idchild[i])]);
-                    add_child(treenode.Nodes[j], idchild[i], idparent, idchild,idObject, product);
-                    j++;
-                }
-            }
-            j = 0;
+            treeView1.EndUpdate();
+            treeView1.ExpandAll();
         }
     }
 }

@@ -93,6 +93,7 @@
             this.comboBox11 = new System.Windows.Forms.ComboBox();
             this.treeViewBox = new System.Windows.Forms.GroupBox();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.button7 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.addObject.SuspendLayout();
             this.addAttribute.SuspendLayout();
@@ -687,10 +688,11 @@
             // 
             // treeViewBox
             // 
+            this.treeViewBox.Controls.Add(this.button7);
             this.treeViewBox.Controls.Add(this.treeView1);
             this.treeViewBox.Location = new System.Drawing.Point(12, 178);
             this.treeViewBox.Name = "treeViewBox";
-            this.treeViewBox.Size = new System.Drawing.Size(386, 237);
+            this.treeViewBox.Size = new System.Drawing.Size(386, 249);
             this.treeViewBox.TabIndex = 16;
             this.treeViewBox.TabStop = false;
             this.treeViewBox.Text = "Дерево";
@@ -699,14 +701,24 @@
             // 
             this.treeView1.Location = new System.Drawing.Point(7, 20);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(371, 211);
+            this.treeView1.Size = new System.Drawing.Size(371, 191);
             this.treeView1.TabIndex = 0;
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(303, 217);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(75, 23);
+            this.button7.TabIndex = 1;
+            this.button7.Text = "Обновить";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // miniSQL
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(407, 427);
+            this.ClientSize = new System.Drawing.Size(407, 439);
             this.Controls.Add(this.treeViewBox);
             this.Controls.Add(this.deleteConn);
             this.Controls.Add(this.deleteAttribute);
@@ -805,5 +817,6 @@
         private System.Windows.Forms.ComboBox comboBox11;
         private System.Windows.Forms.GroupBox treeViewBox;
         private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.Button button7;
     }
 }
