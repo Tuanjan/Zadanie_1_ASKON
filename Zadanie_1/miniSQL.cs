@@ -120,17 +120,16 @@ namespace Zadanie_1
                     {
                         connServer = connDB.server;
                         connDatabase = connDB.database;
+                        inq = new Inquiries(connFile, connServer);
+                        inq.ConnectDB(connDatabase);
+
+                        if (inq.Check_connectionDB() == true)
+                        {
+                            createToolStripMenuItem.Enabled = false;
+                            disconnectToolStripMenuItem.Enabled = true;
+                            connectionToolStripMenuItem.Enabled = false;
+                        }
                     }
-                }
-
-                inq = new Inquiries(connFile, connServer);
-                inq.ConnectDB(connDatabase);
-
-                if (inq.Check_connectionDB() == true)
-                {
-                    createToolStripMenuItem.Enabled = false;
-                    disconnectToolStripMenuItem.Enabled = true;
-                    connectionToolStripMenuItem.Enabled = false;
                 }
             }
             catch (System.Exception ex)
